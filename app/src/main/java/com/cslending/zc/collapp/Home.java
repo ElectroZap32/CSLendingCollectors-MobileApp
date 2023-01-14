@@ -60,7 +60,7 @@ public class Home extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+
         db = new SQLiteDB(getApplicationContext());
         sqlite_obj_setcol = new SQLiteDB(getApplicationContext());
         super.onCreate(savedInstanceState);

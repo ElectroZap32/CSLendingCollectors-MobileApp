@@ -29,7 +29,6 @@ public class Worksheet extends AppCompatActivity {
         String url = "https://cslending-zc.com/csl-modules/webview-worksheet.php?coll_id=" + send_col_id;
 
         WebView webview = findViewById(R.id.myWebView);
-        //next line explained below
         webview.getSettings().setJavaScriptEnabled(true);
         if (cm != null && cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected()) {
             webview.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);

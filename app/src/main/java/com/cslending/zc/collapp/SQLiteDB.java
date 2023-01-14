@@ -91,7 +91,7 @@ public class SQLiteDB {
     }
 
     public Cursor getLoanfromQR(String qrcode) {
-        return db.rawQuery("SELECT lastname, amort FROM " + DATABASE_TABLE + " WHERE cn = '" + qrcode + "' AND paid = '-'", null);
+        return db.rawQuery("SELECT lastname, amort FROM " + DATABASE_TABLE + " WHERE cn = ? AND paid = '-'", new String[] {qrcode});
     }
 
     public void payYes(String qrcode, String pay, String dt, String rem, String image) {
@@ -102,6 +102,7 @@ public class SQLiteDB {
         args.put(KEY_REMARK, rem);
         args.put(KEY_IMAGE, image);
         args.put(KEY_TIMESTAMP, dt);
+
         db.update(DATABASE_TABLE, args, KEY_LOAN + " = '" + qrcode + "'", null);
     }
 
@@ -125,7 +126,7 @@ public class SQLiteDB {
     }
 
     public Cursor getLoanfromSC(String sc) {
-        return db.rawQuery("SELECT cn FROM " + DATABASE_TABLE + " WHERE gcode = '" + sc + "' AND paid = '-'", null);
+        return db.rawQuery("SELECT cn FROM " + DATABASE_TABLE + " WHERE gcode = ? AND paid = '-'", new String[] {sc});
     }
 
     public Cursor queryTable() {

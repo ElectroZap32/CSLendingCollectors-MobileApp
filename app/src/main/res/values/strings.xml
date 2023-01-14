@@ -1,0 +1,35 @@
+<resources>
+    <!-- Containers for SharedPreferences -->
+    <string name="prefStatus" />
+    <string name="collector" />
+    <string name="ldate" />
+
+    <!-- Bottom Navigation Titles -->
+    <string name="title_qr">Scan</string>
+    <string name="title_search">Search</string>
+    <string name="title_worksheet">Worksheet</string>
+    <string name="title_expenses">Expenses</string>
+    <string name="title_calendar">Events</string>
+    <string name="title_account">Account</string>
+
+    <!-- Login Components -->
+    <string name="button_login">Login</string>
+    <string name="edittext_username">Username</string>
+    <string name="edittext_password">Password</string>
+
+    <string name="btn_pay">Pay</string>
+    <string name="btn_nopay">No Pay</string>
+    <string name="btn_print">Print Receipt</string>
+    <string name="edittext_pay">Set Payment Amount</string>
+    <string name="edittext_pay_hint">000.00</string>
+    <string name="edittext_search_hint">Input Search Code</string>
+    <string name="button_search">Search</string>
+    <string name="button_submit">Submit</string>
+    <string name="edittext_expname_hint">Name of Expense</string>
+    <string name="edittext_expamt_hint">Amount (XXX.XX)</string>
+    <string name="version">Mobile Version:</string>
+    <string name="button_logout">Log-out</string>
+
+    <string name="app_name">CSL Collectors</string>
+    <string name="login_bg">CSL App BG</string>
+</resources>

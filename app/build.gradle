@@ -1,0 +1,50 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.cslending.zc.collapp'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.cslending.zc.collapp"
+        minSdk 28
+        targetSdk 33
+        versionCode 3
+        versionName "3.1"
+        buildConfigField "String", "SERVER_URL", "\"https://cslending-zc.com/csl-modules/\""
+        resValue "string", "app_version", "${defaultConfig.versionName}"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.navigation:navigation-fragment:2.5.3'
+    implementation 'androidx.navigation:navigation-ui:2.5.3'
+    implementation 'com.android.volley:volley:1.2.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+    implementation 'com.github.DantSu:ESCPOS-ThermalPrinter-Android:3.0.1'
+    implementation 'androidx.core:core-splashscreen:1.0.0'
+}

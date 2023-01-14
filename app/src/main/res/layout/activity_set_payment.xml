@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="?attr/actionBarSize"
+    android:fillViewport="true"
+    android:background="#DDE8F8"
+    tools:context=".ui.pay.SetPayment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_borrower_title"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            app:cardCornerRadius="10dp"
+            app:cardBackgroundColor="#E4F0F3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="50dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_baseline_supervised_user_circle_24"
+                    tools:ignore="ImageContrastCheck" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp">
+
+                    <!-- Title, secondary and supporting text -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Borrower Information"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_borrower"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            app:cardCornerRadius="10dp"
+            app:cardBackgroundColor="#E4F0F3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_borrower_title">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/borrower_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textSize="24sp"
+                    android:text="{BORROWER NAME}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/borrower_amt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:text="{LOAN AMT}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/borrower_loan"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/borrower_loan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:text="{LOAN CN}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/borrower_name"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_borrower_option_pay"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            app:cardCornerRadius="10dp"
+            app:cardBackgroundColor="#E4F0F3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_borrower">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_pay"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="300dp"
+                    android:layout_height="75dp"
+                    android:backgroundTint="@color/bs5_success"
+                    android:text="@string/btn_pay"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    app:icon="@drawable/ic_baseline_payments_24"
+                    tools:ignore="HardcodedText,TextContrastCheck" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_nopay"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="300dp"
+                    android:layout_height="75dp"
+                    android:backgroundTint="@color/bs5_danger"
+                    android:text="@string/btn_nopay"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    app:icon="@drawable/ic_baseline_cancel_24"
+                    tools:ignore="HardcodedText,TextContrastCheck" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

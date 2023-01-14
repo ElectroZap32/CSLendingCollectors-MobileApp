@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="?attr/actionBarSize"
+    android:fillViewport="true"
+    android:background="#DDE8F8"
+    tools:context=".ui.search.SearchFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_search_title"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        app:cardCornerRadius="10dp"
+        app:cardBackgroundColor="#E4F0F3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_baseline_search_24"
+                tools:ignore="ImageContrastCheck" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp">
+
+                <!-- Title, secondary and supporting text -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Search Loan via GCODE"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_search"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        app:cardCornerRadius="10dp"
+        app:cardBackgroundColor="#E4F0F3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_search_title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_sc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/logo">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edittext_sc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:height="60dp"
+                    android:ems="10"
+                    android:hint="@string/edittext_search_hint"
+                    android:textAllCaps="true"
+                    android:maxLength="5"
+                    android:minHeight="60dp"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapCharacters"
+                    android:textAlignment="center"
+                    android:textColorHint="#546E7A" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/search_btn"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="300dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/bs5_success"
+                android:text="@string/button_search"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:icon="@drawable/ic_baseline_search_24"
+                app:layout_constraintBottom_toTopOf="@+id/button_logout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="HardcodedText,TextContrastCheck" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

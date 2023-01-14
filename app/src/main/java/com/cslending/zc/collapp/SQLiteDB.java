@@ -122,7 +122,7 @@ public class SQLiteDB {
     public void setPaySent(String id) {
         ContentValues args = new ContentValues();
         args.put(KEY_SENT, "1");
-        db.update(DATABASE_TABLE, args, KEY_ID + " = '" + id + "'", null);
+        db.update(DATABASE_TABLE, args, KEY_ID + " = ?", new String[] {id});
     }
 
     public Cursor getLoanfromSC(String sc) {

@@ -199,18 +199,6 @@
                         android:textColorHint="#546E7A"
                         tools:ignore="HardcodedText" />
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_print"
-                    style="@style/Widget.MaterialComponents.Button"
-                    android:layout_width="300dp"
-                    android:layout_height="75dp"
-                    android:backgroundTint="@color/bs5_primary"
-                    android:text="@string/btn_print"
-                    android:textColor="@color/white"
-                    android:textSize="25sp"
-                    app:icon="@drawable/ic_baseline_print_24"
-                    tools:ignore="HardcodedText,TextContrastCheck" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -220,7 +208,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
-            android:visibility="gone"
             app:cardCornerRadius="10dp"
             app:cardBackgroundColor="#E4F0F3"
             app:layout_constraintEnd_toEndOf="parent"
@@ -265,7 +252,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
-            android:visibility="gone"
+
             app:cardCornerRadius="10dp"
             app:cardBackgroundColor="#E4F0F3"
             app:layout_constraintEnd_toEndOf="parent"
@@ -289,6 +276,19 @@
                     android:textColor="@color/white"
                     android:textSize="25sp"
                     app:icon="@drawable/ic_baseline_payments_24"
+                    tools:ignore="HardcodedText,TextContrastCheck" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_print"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="300dp"
+                    android:layout_height="75dp"
+                    android:visibility="gone"
+                    android:backgroundTint="@color/bs5_primary"
+                    android:text="@string/btn_print"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    app:icon="@drawable/ic_baseline_print_24"
                     tools:ignore="HardcodedText,TextContrastCheck" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

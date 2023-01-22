@@ -16,12 +16,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import com.cslending.zc.collapp.Home;
 import com.cslending.zc.collapp.R;
 import com.cslending.zc.collapp.SQLiteDB;
 import com.dantsu.escposprinter.EscPosPrinter;
@@ -42,6 +44,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 @SuppressWarnings("deprecation")
 public class SetPayment_Yes extends AppCompatActivity {
@@ -55,6 +58,7 @@ public class SetPayment_Yes extends AppCompatActivity {
     String amt;
     String pay;
     String rem;
+    String remark;
 
     private final Locale locale = new Locale("id", "PH");
     private final DateFormat df = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a", locale);
@@ -83,8 +87,8 @@ public class SetPayment_Yes extends AppCompatActivity {
 
             ImageView img = findViewById(R.id.pay_image);
 
+            MaterialCardView card_input = findViewById(R.id.card_borrower_option_input);
             MaterialCardView card_image = findViewById(R.id.card_borrower_option_image);
-            MaterialCardView card_pay = findViewById(R.id.card_borrower_option_pay);
 
             final Button btn_pay = findViewById(R.id.button_pay);
             final Button btn_image = findViewById(R.id.button_image);
@@ -93,6 +97,7 @@ public class SetPayment_Yes extends AppCompatActivity {
             if (result.moveToFirst()) {
                 lname = result.getString(0);
                 amt = result.getString(1);
+                remark = result.getString(3);
 
                 borrower_name.setText(lname);
                 borrower_amt.setText("P " + amt);
@@ -106,176 +111,156 @@ public class SetPayment_Yes extends AppCompatActivity {
             Date cal = Calendar.getInstance().getTime();
             String dt = dTFormat.format(cal);
 
+            if (Objects.equals(remark, "")) {
+                card_input.setVisibility(View.VISIBLE);
+                card_image.setVisibility(View.VISIBLE);
+
+                btn_pay.setVisibility(View.VISIBLE);
+                btn_print.setVisibility(View.GONE);
+            } else {
+                input_pay.setFocusable(false);
+                input_pay.setEnabled(false);
+                input_pay.setCursorVisible(false);
+                input_pay.setKeyListener(null);
+
+                input_rem.setFocusable(false);
+                input_rem.setEnabled(false);
+                input_rem.setCursorVisible(false);
+                input_rem.setKeyListener(null);
+
+                card_input.setVisibility(View.GONE);
+                card_image.setVisibility(View.GONE);
+
+                btn_pay.setVisibility(View.GONE);
+                btn_print.setVisibility(View.VISIBLE);
+            }
+
             btn_print.setOnClickListener(v -> {
-                pay = input_pay.getText().toString();
-                rem = input_rem.getText().toString();
+                AlertDialog.Builder confirmbuilder1 = new AlertDialog.Builder(this);
+                confirmbuilder1.setMessage("Confirm Printing of Receipt?")
+                        .setCancelable(false)
+                        .setPositiveButton("No", (dialog, id) -> dialog.dismiss())
+                        .setNegativeButton("Yes", (dialog, id) -> {
+                            AlertDialog.Builder printbuilder = new AlertDialog.Builder(this);
+                            printbuilder.setMessage("START PRINTING RECEIPT...\n\n(Make sure that BT PRINTER is ON!)")
+                                    .setCancelable(false)
+                                    .setNegativeButton("Print", (pdialog, pid) -> {
+                                        try {
+                                            BluetoothConnection connection = BluetoothPrintersConnections.selectFirstPaired();
+                                            if (connection != null) {
+                                                int payment = Integer.parseInt(pay);
+                                                DecimalFormat decformat = new DecimalFormat("0.00");
+                                                EscPosPrinter printer = new EscPosPrinter(connection, 203, 48f, 32);
+                                                final String text = "[C]<b><font size='tall'>CS LENDING</font></b>\n" +
+                                                        "[C]For concerns, please contact us.\n" +
+                                                        "[C]09280446486/09976977844\n" +
+                                                        "[C]VAT REG TIN: 009-493-347-000\n" +
+                                                        "[L]\n" +
+                                                        "[C]" + df.format(new Date()) + "\n" +
+                                                        "[C]================================\n" +
+                                                        "[C]<b height='10'>" + lname + "</b>\n" +
+                                                        "[C]<b>Loan #" + LoanQR + "</b>\n" +
+                                                        "[C]--------------------------------\n" +
+                                                        "[C]<b height='15'><font size='tall'>P " + decformat.format(payment) + "</font></b>\n" +
+                                                        "[C]--------------------------------\n" +
+                                                        "[C]Payment Received!\n" +
+                                                        "[L]\n" +
+                                                        "[C]Complaints, text 09280446486.\n" +
+                                                        "[C]Thank You!\n";
+                                                printer.printFormattedText(text);
+                                                Thread.sleep(2000);
+                                                printer.disconnectPrinter();
 
-                if (TextUtils.isEmpty(pay) || TextUtils.isEmpty(rem)) {
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-                    builder1.setMessage("Please input an amount and remarks when clicking 'Pay'!")
-                            .setCancelable(false)
-                            .setPositiveButton("OK", (dialog1, id1) -> dialog1.dismiss());
-                    AlertDialog alert1 = builder1.create();
-                    alert1.show();
-                } else {
-                    AlertDialog.Builder confirmbuilder1 = new AlertDialog.Builder(this);
-                    confirmbuilder1.setMessage("Confirmation of Clicking 'Pay'?\nAmount: P" + pay)
-                            .setCancelable(false)
-                            .setPositiveButton("No", (dialog, id) -> dialog.dismiss())
-                            .setNegativeButton("Yes", (dialog, id) -> {
-                                AlertDialog.Builder printbuilder = new AlertDialog.Builder(this);
-                                printbuilder.setMessage("START PRINTING RECEIPT...\n\n(Make sure that BT PRINTER is ON!)")
-                                        .setCancelable(false)
-                                        .setNegativeButton("Print", (pdialog, pid) -> {
-                                            try {
-                                                BluetoothConnection connection = BluetoothPrintersConnections.selectFirstPaired();
-                                                if (connection != null) {
-                                                    int payment = Integer.parseInt(pay);
-                                                    DecimalFormat decformat = new DecimalFormat("0.00");
-                                                    EscPosPrinter printer = new EscPosPrinter(connection, 203, 48f, 32);
-                                                    final String text = "[C]<b><font size='tall'>CS LENDING</font></b>\n" +
-                                                            "[C]For concerns, please contact us.\n" +
-                                                            "[C]09280446486/09976977844\n" +
-                                                            "[C]VAT REG TIN: 009-493-347-000\n" +
-                                                            "[L]\n" +
-                                                            "[C]" + df.format(new Date()) + "\n" +
-                                                            "[C]================================\n" +
-                                                            "[C]<b height='10'>" + lname + "</b>\n" +
-                                                            "[C]<b>Loan #" + LoanQR + "</b>\n" +
-                                                            "[C]--------------------------------\n" +
-                                                            "[C]<b height='15'><font size='tall'>P " + decformat.format(payment) + "</font></b>\n" +
-                                                            "[C]--------------------------------\n" +
-                                                            "[C]Payment Received!\n" +
-                                                            "[L]\n" +
-                                                            "[C]Complaints, text 09280446486.\n" +
-                                                            "[C]Thank You!\n";
-                                                    printer.printFormattedText(text);
-                                                    Thread.sleep(2000);
-                                                    printer.disconnectPrinter();
-
-                                                    AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-                                                    builder1.setMessage("Do you want to print receipt again?")
-                                                            .setCancelable(false)
-                                                            .setPositiveButton("No", (dialog12, id12) -> {
-                                                                dialog12.dismiss();
+                                                AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+                                                builder1.setMessage("Do you want to print receipt again?")
+                                                        .setCancelable(false)
+                                                        .setPositiveButton("No", (dialog12, id12) -> {
+                                                            dialog12.dismiss();
+                                                            AlertDialog.Builder donebuilder = new AlertDialog.Builder(this);
+                                                            donebuilder.setMessage("Receipt Printed!")
+                                                                    .setCancelable(false)
+                                                                    .setPositiveButton("Confirm Receipt", (ddialog, did) -> {
+                                                                        ddialog.dismiss();
+                                                                        finish();
+                                                                    });
+                                                            AlertDialog dalert = donebuilder.create();
+                                                            dalert.show();
+                                                        })
+                                                        .setNegativeButton("Yes", (dialog12, id12) -> {
+                                                            try {
+                                                                EscPosPrinter printer2 = new EscPosPrinter(connection, 203, 48f, 32);
+                                                                printer2.printFormattedText(text);
+                                                                Thread.sleep(2000);
+                                                                printer2.disconnectPrinter();
                                                                 AlertDialog.Builder donebuilder = new AlertDialog.Builder(this);
                                                                 donebuilder.setMessage("Receipt Printed!")
                                                                         .setCancelable(false)
-                                                                        .setPositiveButton("Confirm Receipt", (ddialog, did) -> {
+                                                                        .setPositiveButton("Finish", (ddialog, did) -> {
                                                                             ddialog.dismiss();
-
-                                                                            input_pay.setFocusable(false);
-                                                                            input_pay.setEnabled(false);
-                                                                            input_pay.setCursorVisible(false);
-                                                                            input_pay.setKeyListener(null);
-
-                                                                            input_rem.setFocusable(false);
-                                                                            input_rem.setEnabled(false);
-                                                                            input_rem.setCursorVisible(false);
-                                                                            input_rem.setKeyListener(null);
-
-                                                                            card_image.setVisibility(View.VISIBLE);
-                                                                            card_pay.setVisibility(View.VISIBLE);
+                                                                            finish();
                                                                         });
                                                                 AlertDialog dalert = donebuilder.create();
                                                                 dalert.show();
-                                                            })
-                                                            .setNegativeButton("Yes", (dialog12, id12) -> {
-                                                                try {
-                                                                    EscPosPrinter printer2 = new EscPosPrinter(connection, 203, 48f, 32);
-                                                                    printer2.printFormattedText(text);
-                                                                    Thread.sleep(2000);
-                                                                    printer2.disconnectPrinter();
-                                                                    AlertDialog.Builder donebuilder = new AlertDialog.Builder(this);
-                                                                    donebuilder.setMessage("Receipt Printed!")
-                                                                            .setCancelable(false)
-                                                                            .setPositiveButton("Finish", (ddialog, did) -> {
-                                                                                ddialog.dismiss();
-
-                                                                                input_pay.setFocusable(false);
-                                                                                input_pay.setEnabled(false);
-                                                                                input_pay.setCursorVisible(false);
-                                                                                input_pay.setKeyListener(null);
-
-                                                                                input_rem.setFocusable(false);
-                                                                                input_rem.setEnabled(false);
-                                                                                input_rem.setCursorVisible(false);
-                                                                                input_rem.setKeyListener(null);
-
-                                                                                btn_print.setVisibility(View.GONE);
-
-                                                                                card_image.setVisibility(View.VISIBLE);
-                                                                                card_pay.setVisibility(View.VISIBLE);
-                                                                            });
-                                                                    AlertDialog dalert = donebuilder.create();
-                                                                    dalert.show();
-                                                                } catch (EscPosConnectionException | EscPosParserException | EscPosEncodingException | EscPosBarcodeException | InterruptedException e) {
-                                                                    e.printStackTrace();
-                                                                }
-                                                            });
-                                                    AlertDialog alert1 = builder1.create();
-                                                    alert1.show();
-                                                } else {
-                                                    AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-                                                    builder1.setMessage("Cannot print receipt! Please check if BT Printer is ON or CONNECTED.")
-                                                            .setCancelable(false)
-                                                            .setPositiveButton("Finish", (dialog12, id12) -> {
-                                                                dialog12.dismiss();
-
-                                                                input_pay.setFocusable(false);
-                                                                input_pay.setEnabled(false);
-                                                                input_pay.setCursorVisible(false);
-                                                                input_pay.setKeyListener(null);
-
-                                                                input_rem.setFocusable(false);
-                                                                input_rem.setEnabled(false);
-                                                                input_rem.setCursorVisible(false);
-                                                                input_rem.setKeyListener(null);
-
-                                                                card_image.setVisibility(View.VISIBLE);
-                                                                card_pay.setVisibility(View.VISIBLE);
-                                                            });
-                                                    AlertDialog alert1 = builder1.create();
-                                                    alert1.show();
-                                                }
-                                            } catch (Exception e) {
+                                                            } catch (EscPosConnectionException | EscPosParserException | EscPosEncodingException | EscPosBarcodeException | InterruptedException e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        });
+                                                AlertDialog alert1 = builder1.create();
+                                                alert1.show();
+                                            } else {
                                                 AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-                                                builder1.setMessage("There was a problem with printing the receipt! Contact the developer.")
+                                                builder1.setMessage("Cannot print receipt! Please check if BT Printer is ON or CONNECTED.")
                                                         .setCancelable(false)
-                                                        .setPositiveButton("OK", (dialog12, id12) -> finish());
+                                                        .setPositiveButton("Finish", (dialog12, id12) -> dialog12.dismiss());
                                                 AlertDialog alert1 = builder1.create();
                                                 alert1.show();
                                             }
-                                        });
-                                AlertDialog printalert = printbuilder.create();
-                                printalert.show();
-                            });
-                    AlertDialog yesalert = confirmbuilder1.create();
-                    yesalert.show();
-                }
+                                        } catch (Exception e) {
+                                            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+                                            builder1.setMessage("There was a problem with printing the receipt!")
+                                                    .setCancelable(false)
+                                                    .setPositiveButton("OK", (dialog12, id12) -> dialog12.dismiss());
+                                            AlertDialog alert1 = builder1.create();
+                                            alert1.show();
+                                        }
+                                    });
+                            AlertDialog printalert = printbuilder.create();
+                            printalert.show();
+                        });
+                AlertDialog yesalert = confirmbuilder1.create();
+                yesalert.show();
             });
 
             btn_pay.setOnClickListener(v -> {
                 pay = input_pay.getText().toString();
                 rem = input_rem.getText().toString();
 
-                if (img.getDrawable() == null) {
-                    AlertDialog.Builder confirmbuilder1 = new AlertDialog.Builder(this);
-                    confirmbuilder1.setMessage("Please 'Take Picture' first before submitting!")
-                            .setCancelable(false)
-                            .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
-                    AlertDialog noalert = confirmbuilder1.create();
-                    noalert.show();
+                if (img.getDrawable() == null || TextUtils.isEmpty(pay) || TextUtils.isEmpty(rem)) {
+                    if (TextUtils.isEmpty(pay) || TextUtils.isEmpty(rem)) {
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+                        builder1.setMessage("Please input an amount and remarks when clicking 'Pay'!")
+                                .setCancelable(false)
+                                .setPositiveButton("OK", (dialog1, id1) -> dialog1.dismiss());
+                        AlertDialog alert1 = builder1.create();
+                        alert1.show();
+                    } else if (img.getDrawable() == null) {
+                        AlertDialog.Builder confirmbuilder1 = new AlertDialog.Builder(this);
+                        confirmbuilder1.setMessage("Please 'Take Picture' first before submitting!")
+                                .setCancelable(false)
+                                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
+                        AlertDialog noalert = confirmbuilder1.create();
+                        noalert.show();
+                    }
                 } else {
                     Bitmap bm =((BitmapDrawable)img.getDrawable()).getBitmap();
                     ByteArrayOutputStream bao = new ByteArrayOutputStream();
-                    bm.compress(Bitmap.CompressFormat.JPEG, 50, bao);
+                    bm.compress(Bitmap.CompressFormat.JPEG, 25, bao);
 
                     byte[] rdata = bao.toByteArray();
                     String data = Base64.encodeToString(rdata, Base64.NO_WRAP);
 
                     AlertDialog.Builder confirmbuilder1 = new AlertDialog.Builder(this);
-                    confirmbuilder1.setMessage("Confirmation of Completion of Payment?")
+                    confirmbuilder1.setMessage("Confirmation of Clicking 'Pay'?\nAmount: P" + pay)
                             .setCancelable(false)
                             .setPositiveButton("No", (dialog, id) -> dialog.dismiss())
                             .setNegativeButton("Yes", (dialog, id) -> {
@@ -284,11 +269,26 @@ public class SetPayment_Yes extends AppCompatActivity {
                                 db.close();
 
                                 AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-                                builder1.setMessage("Payment Recorded. Thank you!")
+                                builder1.setMessage("Action Recorded. Thank you!")
                                         .setCancelable(false)
                                         .setPositiveButton("Finish", (dialog12, id12) -> {
                                             dialog12.dismiss();
-                                            finish();
+
+                                            input_pay.setFocusable(false);
+                                            input_pay.setEnabled(false);
+                                            input_pay.setCursorVisible(false);
+                                            input_pay.setKeyListener(null);
+
+                                            input_rem.setFocusable(false);
+                                            input_rem.setEnabled(false);
+                                            input_rem.setCursorVisible(false);
+                                            input_rem.setKeyListener(null);
+
+                                            card_input.setVisibility(View.GONE);
+                                            card_image.setVisibility(View.GONE);
+
+                                            btn_pay.setVisibility(View.GONE);
+                                            btn_print.setVisibility(View.VISIBLE);
                                         });
                                 AlertDialog alert1 = builder1.create();
                                 alert1.show();

@@ -106,7 +106,7 @@ public class SetPayment_No extends AppCompatActivity {
                     } else {
                         Bitmap bm =((BitmapDrawable)img.getDrawable()).getBitmap();
                         ByteArrayOutputStream bao = new ByteArrayOutputStream();
-                        bm.compress(Bitmap.CompressFormat.JPEG, 50, bao);
+                        bm.compress(Bitmap.CompressFormat.JPEG, 25, bao);
 
                         byte[] rdata = bao.toByteArray();
                         String data = Base64.encodeToString(rdata, Base64.NO_WRAP);
@@ -121,7 +121,7 @@ public class SetPayment_No extends AppCompatActivity {
                                     db.close();
 
                                     AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-                                    builder1.setMessage("Payment Recorded. Thank you!")
+                                    builder1.setMessage("Action Recorded. Thank you!")
                                             .setCancelable(false)
                                             .setPositiveButton("OK", (dialog13, id13) -> {
                                                 dialog13.dismiss();

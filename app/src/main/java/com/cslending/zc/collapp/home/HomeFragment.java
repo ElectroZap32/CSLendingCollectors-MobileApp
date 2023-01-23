@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment {
                         startActivity(intent);
                     } else if (Objects.equals(paid, "Yes")) {
                         if (Objects.equals(rem, "")) {
-                            String message = "Loan #" + loancode + " payment is set to 'PAY' but not yet processed. Proceed?";
+                            String message = "Loan #" + loancode + " payment is set to 'PAY' but not yet processed.\n\nProceed?";
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(requireContext());
                             builder1.setMessage(message)
                                     .setCancelable(false)
@@ -76,7 +76,7 @@ public class HomeFragment extends Fragment {
                             AlertDialog alert1 = builder1.create();
                             alert1.show();
                         } else {
-                            String message = "Loan #" + loancode + " payment was already set to 'PAY'. Do you want to print receipt only?";
+                            String message = "Loan #" + loancode + " payment was already set to 'PAY'.\n\nDo you want to print receipt only?";
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(requireContext());
                             builder1.setMessage(message)
                                     .setCancelable(false)
@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
                         }
                     } else if (Objects.equals(paid, "No")) {
                         if (Objects.equals(rem, "")) {
-                            String message = "Loan #" + loancode + " payment is set to 'NO PAY' but not yet processed. Proceed?";
+                            String message = "Loan #" + loancode + " payment is set to 'NO PAY' but not yet processed.\n\nProceed?";
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(requireContext());
                             builder1.setMessage(message)
                                     .setCancelable(false)

@@ -199,6 +199,18 @@
                         android:textColorHint="#546E7A"
                         tools:ignore="HardcodedText" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_save"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="300dp"
+                    android:layout_height="75dp"
+                    android:backgroundTint="@color/bs5_success"
+                    android:text="@string/btn_save"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    app:icon="@drawable/baseline_save_24"
+                    tools:ignore="HardcodedText,TextContrastCheck" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -272,7 +284,7 @@
                     android:layout_width="300dp"
                     android:layout_height="75dp"
                     android:backgroundTint="@color/bs5_success"
-                    android:text="@string/btn_pay"
+                    android:text="@string/btn_finish"
                     android:textColor="@color/white"
                     android:textSize="25sp"
                     app:icon="@drawable/ic_baseline_payments_24"

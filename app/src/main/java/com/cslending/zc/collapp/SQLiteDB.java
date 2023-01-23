@@ -72,8 +72,7 @@ public class SQLiteDB {
         db.execSQL(DATABASE_CREATE);
     }
 
-    public Cursor queryOfflineData()
-    {
+    public Cursor queryOfflineData() {
         return db.rawQuery("SELECT * FROM " + DATABASE_TABLE, null);
     }
 
@@ -91,7 +90,7 @@ public class SQLiteDB {
     }
 
     public Cursor getLoanfromQR(String qrcode) {
-        return db.rawQuery("SELECT lastname, amort, paid, rem, img FROM " + DATABASE_TABLE + " WHERE cn = ?", new String[] {qrcode});
+        return db.rawQuery("SELECT lastname, amort, paid, rem, amt, img FROM " + DATABASE_TABLE + " WHERE cn = ?", new String[] {qrcode});
     }
 
     public void payYes(String qrcode, String pay, String dt, String rem, String image) {
@@ -106,6 +105,14 @@ public class SQLiteDB {
         db.update(DATABASE_TABLE, args, KEY_LOAN + " = ?", new String[] {qrcode});
     }
 
+    public void payYesImg(String qrcode, String image) {
+        ContentValues args = new ContentValues();
+        args.put(KEY_SENT, "0");
+        args.put(KEY_IMAGE, image);
+
+        db.update(DATABASE_TABLE, args, KEY_LOAN + " = ?", new String[] {qrcode});
+    }
+
     public void payNo(String qrcode, String dt, String rem, String image) {
         ContentValues args = new ContentValues();
         args.put(KEY_PAID, "No");
@@ -116,7 +123,7 @@ public class SQLiteDB {
     }
 
     public Cursor getUnsyncedData() {
-        return db.rawQuery("SELECT id, amt, paid, dt, rem, img FROM " + DATABASE_TABLE + " WHERE sent = '0' AND (paid = 'Yes' OR paid = 'No')", null);
+        return db.rawQuery("SELECT id, amt, paid, dt, rem, img FROM " + DATABASE_TABLE + " WHERE sent = '0' AND (paid = 'Yes' OR paid = 'No') AND rem != '' AND img != ''", null);
     }
 
     public void setPaySent(String id) {

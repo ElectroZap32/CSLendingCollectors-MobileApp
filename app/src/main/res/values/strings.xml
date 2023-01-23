@@ -17,6 +17,8 @@
     <string name="edittext_username">Username</string>
     <string name="edittext_password">Password</string>
 
+    <string name="btn_save">Save</string>
+    <string name="btn_finish">Finish</string>
     <string name="btn_pay">Pay</string>
     <string name="btn_nopay">No Pay</string>
     <string name="btn_print">Print Receipt</string>

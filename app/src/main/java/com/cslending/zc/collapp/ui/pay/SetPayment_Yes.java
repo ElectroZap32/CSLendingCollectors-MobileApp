@@ -252,10 +252,7 @@ public class SetPayment_Yes extends AppCompatActivity {
                                                                                 AlertDialog.Builder donebuilder = new AlertDialog.Builder(this);
                                                                                 donebuilder.setMessage("Receipt Printed!")
                                                                                         .setCancelable(false)
-                                                                                        .setPositiveButton("Finish", (ddialog, did) -> {
-                                                                                            ddialog.dismiss();
-                                                                                            finish();
-                                                                                        });
+                                                                                        .setPositiveButton("Finish", (ddialog, did) -> ddialog.dismiss());
                                                                                 AlertDialog dalert = donebuilder.create();
                                                                                 dalert.show();
                                                                             } catch (EscPosConnectionException | EscPosParserException | EscPosEncodingException | EscPosBarcodeException | InterruptedException e) {
@@ -353,10 +350,7 @@ public class SetPayment_Yes extends AppCompatActivity {
                                                                 AlertDialog.Builder donebuilder = new AlertDialog.Builder(this);
                                                                 donebuilder.setMessage("Receipt Printed!")
                                                                         .setCancelable(false)
-                                                                        .setPositiveButton("Finish", (ddialog, did) -> {
-                                                                            ddialog.dismiss();
-                                                                            finish();
-                                                                        });
+                                                                        .setPositiveButton("Finish", (ddialog, did) -> ddialog.dismiss());
                                                                 AlertDialog dalert = donebuilder.create();
                                                                 dalert.show();
                                                             } catch (EscPosConnectionException | EscPosParserException | EscPosEncodingException | EscPosBarcodeException | InterruptedException e) {

@@ -236,10 +236,7 @@ public class SetPayment_Yes extends AppCompatActivity {
                                                                             AlertDialog.Builder donebuilder = new AlertDialog.Builder(this);
                                                                             donebuilder.setMessage("Receipt Printed!")
                                                                                     .setCancelable(false)
-                                                                                    .setPositiveButton("Confirm Receipt", (ddialog, did) -> {
-                                                                                        ddialog.dismiss();
-                                                                                        finish();
-                                                                                    });
+                                                                                    .setPositiveButton("Confirm Receipt", (ddialog, did) -> ddialog.dismiss());
                                                                             AlertDialog dalert = donebuilder.create();
                                                                             dalert.show();
                                                                         })
@@ -334,10 +331,7 @@ public class SetPayment_Yes extends AppCompatActivity {
                                                             AlertDialog.Builder donebuilder = new AlertDialog.Builder(this);
                                                             donebuilder.setMessage("Receipt Printed!")
                                                                     .setCancelable(false)
-                                                                    .setPositiveButton("Confirm Receipt", (ddialog, did) -> {
-                                                                        ddialog.dismiss();
-                                                                        finish();
-                                                                    });
+                                                                    .setPositiveButton("Confirm Receipt", (ddialog, did) -> ddialog.dismiss());
                                                             AlertDialog dalert = donebuilder.create();
                                                             dalert.show();
                                                         })

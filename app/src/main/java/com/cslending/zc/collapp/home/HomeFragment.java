@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.cslending.zc.collapp.Home;
 import com.cslending.zc.collapp.R;
 import com.cslending.zc.collapp.SQLiteDB;
 import com.cslending.zc.collapp.databinding.FragmentHomeBinding;
@@ -52,17 +53,16 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getActivity(), "No Loans Found!", Toast.LENGTH_SHORT).show();
             } else {
                 if (result2.moveToFirst()) {
-                    String loancode = result2.getString(0);
-                    String paid = result2.getString(1);
-                    String rem = result2.getString(2);
+                    String paid = result2.getString(2);
+                    String rem = result2.getString(3);
 
                     if (Objects.equals(paid, "-")) {
                         Intent intent = new Intent(getActivity(), SetPayment.class);
-                        intent.putExtra("scode", loancode);
+                        intent.putExtra("scode", code);
                         startActivity(intent);
                     } else if (Objects.equals(paid, "Yes")) {
                         if (Objects.equals(rem, "")) {
-                            String message = "Loan #" + loancode + " payment is set to 'PAY' but not yet processed.\n\nProceed?";
+                            String message = "Loan #" + code + " payment is set to 'PAY' but not yet processed.\n\nProceed?";
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(requireContext());
                             builder1.setMessage(message)
                                     .setCancelable(false)
@@ -70,13 +70,13 @@ public class HomeFragment extends Fragment {
                                         dialog12.dismiss();
 
                                         Intent intent = new Intent(getActivity(), SetPayment_Yes.class);
-                                        intent.putExtra("scode", loancode);
+                                        intent.putExtra("scode", code);
                                         startActivity(intent);
                                     });
                             AlertDialog alert1 = builder1.create();
                             alert1.show();
                         } else {
-                            String message = "Loan #" + loancode + " payment was already set to 'PAY'.\n\nDo you want to print receipt only?";
+                            String message = "Loan #" + code + " payment was already set to 'PAY'.\n\nDo you want to print receipt only?";
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(requireContext());
                             builder1.setMessage(message)
                                     .setCancelable(false)
@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment {
                                         dialog12.dismiss();
 
                                         Intent intent = new Intent(getActivity(), SetPayment_Yes.class);
-                                        intent.putExtra("scode", loancode);
+                                        intent.putExtra("scode", code);
                                         startActivity(intent);
                                     });
                             AlertDialog alert1 = builder1.create();
@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
                         }
                     } else if (Objects.equals(paid, "No")) {
                         if (Objects.equals(rem, "")) {
-                            String message = "Loan #" + loancode + " payment is set to 'NO PAY' but not yet processed.\n\nProceed?";
+                            String message = "Loan #" + code + " payment is set to 'NO PAY' but not yet processed.\n\nProceed?";
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(requireContext());
                             builder1.setMessage(message)
                                     .setCancelable(false)
@@ -101,13 +101,13 @@ public class HomeFragment extends Fragment {
                                         dialog12.dismiss();
 
                                         Intent intent = new Intent(getActivity(), SetPayment_No.class);
-                                        intent.putExtra("scode", loancode);
+                                        intent.putExtra("scode", code);
                                         startActivity(intent);
                                     });
                             AlertDialog alert1 = builder1.create();
                             alert1.show();
                         } else {
-                            String message = "Loan #" + loancode + " payment was already set to 'NO PAY'.";
+                            String message = "Loan #" + code + " payment was already set to 'NO PAY'.";
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(requireContext());
                             builder1.setMessage(message)
                                     .setCancelable(false)

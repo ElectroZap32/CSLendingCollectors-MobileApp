@@ -27,8 +27,12 @@
         android:required="true" />
     <uses-permission
         android:name="android.permission.ACCESS_NETWORK_STATE"
-        android:required="true" /> <!-- For Storage-related Permissions and Access -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+        android:required="true" />
+
+    <!-- For Storage-related Permissions and Access -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:requestLegacyExternalStorage="true"

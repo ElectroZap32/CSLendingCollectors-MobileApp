@@ -11,7 +11,7 @@ android {
         minSdk 26
         targetSdk 33
         versionCode 3
-        versionName "3.3"
+        versionName "3.4"
         buildConfigField "String", "SERVER_URL", "\"https://cslending-zc.com/csl-modules/\""
         resValue "string", "app_version", "${defaultConfig.versionName}"
     }

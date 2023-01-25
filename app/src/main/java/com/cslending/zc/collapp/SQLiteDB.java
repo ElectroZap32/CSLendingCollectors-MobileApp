@@ -123,7 +123,7 @@ public class SQLiteDB {
     }
 
     public Cursor getUnsyncedData() {
-        return db.rawQuery("SELECT id, amt, paid, dt, rem, img FROM " + DATABASE_TABLE + " WHERE sent = '0' AND (paid = 'Yes' OR paid = 'No') AND rem != '' AND img != ''", null);
+        return db.rawQuery("SELECT id, amt, paid, dt, rem, img FROM " + DATABASE_TABLE + " WHERE sent = '0' AND (paid = 'Yes' OR paid = 'No') AND rem != ''", null);
     }
 
     public void setPaySent(String id) {
